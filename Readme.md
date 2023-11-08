@@ -1,0 +1,31 @@
+Buenas,
+
+En esta prueba técnica pongo a prueba varias tareas o nociones mias las cuales he aprendido durante todos estos años en el mundo de la tecnología.
+
+El código se muestra funcionando con una base de datos h2:
+
+http://localhost:8080/h2-console/
+
+El usuario y contraseña es inditex.
+
+La carga de los datos no se esta realizando por errores en el IDE y demás, por eso he puesto en funcionamiento un endpoint de carga de datos:
+
+http://localhost:8080/prices/anyadir
+
+Una vez esto ya se podrá "jugar" con la bbdd.
+
+http://localhost:8080/prices/consulta
+
+Este es el endpoint que se pedía, esta en total funcionamiento.
+
+El request tiene que ser así:
+
+{
+"applicationDate": "2020-06-14 00:00:00",
+"productId": 35455,
+"brandId": 1
+}
+
+Los tests son unitarios, al tener que hacer rapido el proyecto de prueba, no pude hacer nada mas.
+
+Cualquier cosa me comentais.
