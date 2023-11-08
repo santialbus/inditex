@@ -30,14 +30,11 @@ public class PricesServiceImpl implements PricesService {
      */
     @Override
     public PriceResponse consultaDatos(PriceRequest priceRequest) {
-        /*Optional<Prices> price = repository.findByStartDateAndProductIdAndBrandId(priceRequest.getApplicationDate(), priceRequest.getProductId(),  priceRequest.getBrandId());
+        Optional<Prices> price = repository.findByStartDateAndProductIdAndBrandId(priceRequest.getApplicationDate(), priceRequest.getProductId(),  priceRequest.getBrandId());
         if (price.isEmpty()) {
             throw new PriceNotFoundException("No se encontro ningun precio con los datos proporcionados");
         }
-        return price.map(PriceMapper::fromPricesToResponse).orElse(new PriceResponse());*/
-        return repository.findByStartDateAndProductIdAndBrandId(priceRequest.getApplicationDate(), priceRequest.getProductId(), priceRequest.getBrandId())
-                .map(PriceMapper::fromPricesToResponse)
-                .orElseThrow(() -> new PriceNotFoundException("No se encontró ningún precio con los datos proporcionados"));
+        return price.map(PriceMapper::fromPricesToResponse).orElse(new PriceResponse());
     }
 
     /**

@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/prices")
@@ -28,12 +25,8 @@ public class PricesController {
      */
     @PostMapping("/consulta")
     public ResponseEntity<PriceResponse> consultarPrecio(@RequestBody PriceRequest request) {
-        /*PriceResponse calculatedPrice = pricesService.consultaDatos(request);
-        return new ResponseEntity<>(calculatedPrice, HttpStatus.OK);*/
-        return Optional.of(pricesService.consultaDatos(request))
-                .map(calculatedPrice -> new ResponseEntity<>(calculatedPrice, HttpStatus.OK))
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontró el precio"));
-
+        PriceResponse calculatedPrice = pricesService.consultaDatos(request);
+        return new ResponseEntity<>(calculatedPrice, HttpStatus.OK);
     }
 
     /**
