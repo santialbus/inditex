@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/prices")
@@ -31,11 +34,11 @@ public class PricesController {
 
     /**
      * Anyadir los prices dado que desde el sql creado peta
-     * @return HttpStatus
+     * @return String, HttpStatus
      */
     @PostMapping("/anyadir")
-    public ResponseEntity<HttpStatus> anyadirPrices() {
-        pricesService.anyadirPrices();
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<String> anyadirPrices() {
+        String productos = pricesService.anyadirPrices();
+        return new ResponseEntity<>(productos, HttpStatus.OK);
     }
 }

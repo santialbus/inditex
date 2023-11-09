@@ -12,13 +12,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * service impl de la clase price
  */
 @Service
 public class PricesServiceImpl implements PricesService {
+
+    private static final String ANYADIDO = "Acabas de añadir productos";
 
     @Autowired
     private PricesRepository repository;
@@ -30,18 +31,19 @@ public class PricesServiceImpl implements PricesService {
      */
     @Override
     public PriceResponse consultaDatos(PriceRequest priceRequest) {
-        Optional<Prices> price = repository.findByStartDateAndProductIdAndBrandId(priceRequest.getApplicationDate(), priceRequest.getProductId(),  priceRequest.getBrandId());
-        if (price.isEmpty()) {
-            throw new PriceNotFoundException("No se encontro ningun precio con los datos proporcionados");
-        }
-        return price.map(PriceMapper::fromPricesToResponse).orElse(new PriceResponse());
+        return repository.findByStartDateAndProductIdAndBrandId(priceRequest.getApplicationDate(), priceRequest.getProductId(), priceRequest.getBrandId())
+                .map(PriceMapper::fromPricesToResponse)
+                .orElseThrow(() -> new PriceNotFoundException("No se encontró ningún precio con los datos proporcionados"));
     }
 
     /**
      * Metodo de añadir prices
+     * @return String
      */
     @Override
-    public void anyadirPrices() {
+    public String anyadirPrices() {
+
+
         List<Prices> listPrices = new ArrayList<>();
 
         Prices prices1 = new Prices();
@@ -90,5 +92,7 @@ public class PricesServiceImpl implements PricesService {
         listPrices.add(prices4);
 
         repository.saveAll(listPrices);
+
+        return ANYADIDO;
     }
 }

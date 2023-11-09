@@ -11,6 +11,6 @@ public interface PricesService {
 
     PriceResponse consultaDatos(PriceRequest priceRequest);
 
-    void anyadirPrices();
+    String anyadirPrices();
 
 }
