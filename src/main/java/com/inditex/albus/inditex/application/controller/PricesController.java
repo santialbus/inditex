@@ -28,8 +28,7 @@ public class PricesController {
      */
     @PostMapping("/consulta")
     public ResponseEntity<PriceResponse> consultarPrecio(@RequestBody PriceRequest request) {
-        PriceResponse calculatedPrice = pricesService.consultaDatos(request);
-        return new ResponseEntity<>(calculatedPrice, HttpStatus.OK);
+        return new ResponseEntity<>(pricesService.consultaDatos(request), HttpStatus.OK);
     }
 
     /**
@@ -38,7 +37,6 @@ public class PricesController {
      */
     @PostMapping("/anyadir")
     public ResponseEntity<String> anyadirPrices() {
-        String productos = pricesService.anyadirPrices();
-        return new ResponseEntity<>(productos, HttpStatus.OK);
+        return new ResponseEntity<>(pricesService.anyadirPrices(), HttpStatus.OK);
     }
 }

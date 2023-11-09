@@ -7,6 +7,8 @@ import com.inditex.albus.inditex.application.service.PricesService;
 import com.inditex.albus.inditex.domain.model.Prices;
 import com.inditex.albus.inditex.infrastructure.exceptions.PriceNotFoundException;
 import com.inditex.albus.inditex.infrastructure.repository.PricesRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,9 @@ public class PricesServiceImpl implements PricesService {
     @Autowired
     private PricesRepository repository;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(PricesServiceImpl.class);
+
+
     /**
      * Consulta de datos
      * @param priceRequest
@@ -31,9 +36,14 @@ public class PricesServiceImpl implements PricesService {
      */
     @Override
     public PriceResponse consultaDatos(PriceRequest priceRequest) {
+        LOGGER.info("Consultar datos del Product ID: {}, Brand ID: {}, Application Date: {}", priceRequest.getProductId(), priceRequest.getBrandId(), priceRequest.getApplicationDate());
+
         return repository.findByStartDateAndProductIdAndBrandId(priceRequest.getApplicationDate(), priceRequest.getProductId(), priceRequest.getBrandId())
                 .map(PriceMapper::fromPricesToResponse)
-                .orElseThrow(() -> new PriceNotFoundException("No se encontró ningún precio con los datos proporcionados"));
+                .orElseThrow(() -> {
+                    LOGGER.error("No se encontró el product ID: {}, Brand ID: {}, Application Date: {}", priceRequest.getProductId(), priceRequest.getBrandId(), priceRequest.getApplicationDate());
+                    return new PriceNotFoundException("No se encontró ningún precio con los datos proporcionados");
+                });
     }
 
     /**
