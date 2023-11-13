@@ -44,7 +44,7 @@ public class PricesServiceImplTest {
         Prices simulatedPrice = price1;
         when(pricesRepository.findByStartDateAndProductIdAndBrandId(any(), anyInt(), anyInt()))
                 .thenReturn(Optional.of(simulatedPrice));
-        PriceResponse response = pricesService.consultaDatos(priceRequest);
+        PriceResponse response = pricesService.consultaDatos(dateTimeString, priceRequest.getProductId(), priceRequest.getBrandId());
         assertEquals(35.50, response.getFinalPrice());
         System.out.println("Test 1: petición a las 10:00 del día 14 del producto 35455 para la brand 1 (ZARA)");
     }
@@ -55,7 +55,7 @@ public class PricesServiceImplTest {
         Prices simulatedPrice = price2;
         when(pricesRepository.findByStartDateAndProductIdAndBrandId(any(), anyInt(), anyInt()))
                 .thenReturn(Optional.of(simulatedPrice));
-        PriceResponse response = pricesService.consultaDatos(priceRequest);
+        PriceResponse response = pricesService.consultaDatos(priceRequest.getApplicationDate(), priceRequest.getProductId(), priceRequest.getBrandId());
 
         assertEquals(25.45, response.getFinalPrice());
         System.out.println("Test 2: petición a las 16:00 del día 14 del producto 35455 para la brand 1 (ZARA)");
@@ -67,8 +67,7 @@ public class PricesServiceImplTest {
         Prices simulatedPrice = price4;
         when(pricesRepository.findByStartDateAndProductIdAndBrandId(any(), anyInt(), anyInt()))
                 .thenReturn(Optional.of(simulatedPrice));
-        PriceResponse response = pricesService.consultaDatos(priceRequest);
-
+        PriceResponse response = pricesService.consultaDatos(priceRequest.getApplicationDate(), priceRequest.getProductId(), priceRequest.getBrandId());
         assertEquals(38.95, response.getFinalPrice());
         System.out.println("Test 3: petición a las 21:00 del día 14 del producto 35455 para la brand 1 (ZARA)");
     }
@@ -79,8 +78,7 @@ public class PricesServiceImplTest {
         Prices simulatedPrice = price3;
         when(pricesRepository.findByStartDateAndProductIdAndBrandId(any(), anyInt(), anyInt()))
                 .thenReturn(Optional.of(simulatedPrice));
-        PriceResponse response = pricesService.consultaDatos(priceRequest);
-
+        PriceResponse response = pricesService.consultaDatos(priceRequest.getApplicationDate(), priceRequest.getProductId(), priceRequest.getBrandId());
         assertEquals(30.50, response.getFinalPrice());
         System.out.println("Test 4: petición a las 10:00 del día 15 del producto 35455 para la brand 1 (ZARA)");
     }
@@ -91,8 +89,7 @@ public class PricesServiceImplTest {
         Prices simulatedPrice = price4;
         when(pricesRepository.findByStartDateAndProductIdAndBrandId(any(), anyInt(), anyInt()))
                 .thenReturn(Optional.of(simulatedPrice));
-        PriceResponse response = pricesService.consultaDatos(priceRequest);
-
+        PriceResponse response = pricesService.consultaDatos(priceRequest.getApplicationDate(), priceRequest.getProductId(), priceRequest.getBrandId());
         assertEquals(38.95, response.getFinalPrice());
         System.out.println("Test 5: petición a las 21:00 del día 16 del producto 35455 para la brand 1 (ZARA)");
     }

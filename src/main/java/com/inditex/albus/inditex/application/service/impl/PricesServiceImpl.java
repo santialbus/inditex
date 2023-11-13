@@ -5,7 +5,9 @@ import com.inditex.albus.inditex.application.dto.response.PriceResponse;
 import com.inditex.albus.inditex.application.mapper.PriceMapper;
 import com.inditex.albus.inditex.application.service.PricesService;
 import com.inditex.albus.inditex.domain.model.Prices;
+import com.inditex.albus.inditex.infrastructure.exceptions.BrandIdNotFoundException;
 import com.inditex.albus.inditex.infrastructure.exceptions.PriceNotFoundException;
+import com.inditex.albus.inditex.infrastructure.exceptions.ProductIdNotFoundException;
 import com.inditex.albus.inditex.infrastructure.repository.PricesRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * service impl de la clase price
@@ -30,19 +33,31 @@ public class PricesServiceImpl implements PricesService {
 
 
     /**
-     * Consulta de datos
-     * @param priceRequest
-     * @return PriceResponse
+     * Metodo de consulta de precios
+     * @param applicationDate
+     * @param productId
+     * @param brandId
+     * @return priceResponse
      */
     @Override
-    public PriceResponse consultaDatos(PriceRequest priceRequest) {
-        LOGGER.info("Consultar datos del Product ID: {}, Brand ID: {}, Application Date: {}", priceRequest.getProductId(), priceRequest.getBrandId(), priceRequest.getApplicationDate());
+    public PriceResponse consultaDatos(String applicationDate, Integer productId, Integer brandId) {
+        LOGGER.info("Consultar datos del Product ID: {}, Brand ID: {}, Application Date: {}", productId, brandId, applicationDate);
 
-        return repository.findByStartDateAndProductIdAndBrandId(priceRequest.getApplicationDate(), priceRequest.getProductId(), priceRequest.getBrandId())
-                .map(PriceMapper::fromPricesToResponse)
+
+        Optional<Prices> pricesOptional =repository.findByStartDateAndProductIdAndBrandId(applicationDate, productId,brandId);
+
+        return pricesOptional.map(PriceMapper::fromPricesToResponse)
                 .orElseThrow(() -> {
-                    LOGGER.error("No se encontró el product ID: {}, Brand ID: {}, Application Date: {}", priceRequest.getProductId(), priceRequest.getBrandId(), priceRequest.getApplicationDate());
-                    return new PriceNotFoundException("No se encontró ningún precio con los datos proporcionados");
+                    if (!repository.existsByProductId(productId)) {
+                        LOGGER.error("No se encontró el Product ID: {}", productId);
+                        throw new ProductIdNotFoundException("No se encontró ningún precio con el Product ID proporcionado");
+                    } else if (!repository.existsByBrandId(brandId)) {
+                        LOGGER.error("No se encontró el Brand ID: {}", brandId);
+                        throw new BrandIdNotFoundException("No se encontró ningún precio con el Brand ID proporcionado");
+                    } else {
+                        LOGGER.error("No se encontró el product ID: {}, Brand ID: {}, Application Date: {}", productId, brandId, applicationDate);
+                        return new PriceNotFoundException("No se encontró ningún precio con los datos proporcionados");
+                    }
                 });
     }
 
@@ -52,8 +67,6 @@ public class PricesServiceImpl implements PricesService {
      */
     @Override
     public String anyadirPrices() {
-
-
         List<Prices> listPrices = new ArrayList<>();
 
         Prices prices1 = new Prices();

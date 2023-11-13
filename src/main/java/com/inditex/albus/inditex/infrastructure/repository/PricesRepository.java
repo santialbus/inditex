@@ -28,4 +28,8 @@ public interface PricesRepository extends JpaRepository<Prices, Long> {
     Optional<Prices> findByStartDateAndProductIdAndBrandId(@Param("applicationDate") String applicationDate,
                                                            @Param("productId") Integer productId,
                                                            @Param("brandId") Integer brandId);
+
+    Boolean existsByProductId(Integer productId);
+
+    Boolean existsByBrandId(Integer brandId);
 }
