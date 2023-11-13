@@ -1,15 +1,11 @@
-package com.inditex.albus.inditex.application.controller;
+package com.inditex.albus.inditex.application.rest;
 
-import com.inditex.albus.inditex.application.dto.request.PriceRequest;
-import com.inditex.albus.inditex.application.dto.response.PriceResponse;
-import com.inditex.albus.inditex.application.service.PricesService;
+import com.inditex.albus.inditex.domain.dto.response.PriceResponse;
+import com.inditex.albus.inditex.application.ports.in.PricesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/prices")

@@ -1,9 +1,11 @@
 package com.inditex.albus.inditex.application.service.impl;
 
-import com.inditex.albus.inditex.application.dto.request.PriceRequest;
-import com.inditex.albus.inditex.application.dto.response.PriceResponse;
-import com.inditex.albus.inditex.domain.model.Prices;
-import com.inditex.albus.inditex.infrastructure.repository.PricesRepository;
+import com.inditex.albus.inditex.application.service.PricesServiceImpl;
+import com.inditex.albus.inditex.domain.dto.request.PriceRequest;
+import com.inditex.albus.inditex.domain.dto.response.PriceResponse;
+import com.inditex.albus.inditex.infrastructure.adapter.PricesDataAdapter;
+import com.inditex.albus.inditex.infrastructure.model.Prices;
+import com.inditex.albus.inditex.infrastructure.jpa.PricesRepositoryJpa;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +27,7 @@ public class PricesServiceImplTest {
     private PricesServiceImpl pricesService;
 
     @Mock
-    private PricesRepository pricesRepository;
+    private PricesDataAdapter adapter;
     static Prices price1, price2, price3, price4;
     @BeforeEach
     public void setup() {
@@ -42,7 +44,7 @@ public class PricesServiceImplTest {
         String dateTimeString = "2020-06-14T10:00:00";
         PriceRequest priceRequest = new PriceRequest(dateTimeString, 35455, 1);
         Prices simulatedPrice = price1;
-        when(pricesRepository.findByStartDateAndProductIdAndBrandId(any(), anyInt(), anyInt()))
+        when(adapter.findByStartDateAndProductIdAndBrandId(any(), anyInt(), anyInt()))
                 .thenReturn(Optional.of(simulatedPrice));
         PriceResponse response = pricesService.consultaDatos(dateTimeString, priceRequest.getProductId(), priceRequest.getBrandId());
         assertEquals(35.50, response.getFinalPrice());
@@ -53,7 +55,7 @@ public class PricesServiceImplTest {
     public void testFindPriceAt16PMOnDay14ForProduct35455AndBrand1() {
         PriceRequest priceRequest = new PriceRequest("2020-06-14T16:00:00", 35455, 1);
         Prices simulatedPrice = price2;
-        when(pricesRepository.findByStartDateAndProductIdAndBrandId(any(), anyInt(), anyInt()))
+        when(adapter.findByStartDateAndProductIdAndBrandId(any(), anyInt(), anyInt()))
                 .thenReturn(Optional.of(simulatedPrice));
         PriceResponse response = pricesService.consultaDatos(priceRequest.getApplicationDate(), priceRequest.getProductId(), priceRequest.getBrandId());
 
@@ -65,7 +67,7 @@ public class PricesServiceImplTest {
     public void testFindPriceAt21PMOnDay14ForProduct35455AndBrand1() {
         PriceRequest priceRequest = new PriceRequest("2020-06-14T21:00:00", 35455, 1);
         Prices simulatedPrice = price4;
-        when(pricesRepository.findByStartDateAndProductIdAndBrandId(any(), anyInt(), anyInt()))
+        when(adapter.findByStartDateAndProductIdAndBrandId(any(), anyInt(), anyInt()))
                 .thenReturn(Optional.of(simulatedPrice));
         PriceResponse response = pricesService.consultaDatos(priceRequest.getApplicationDate(), priceRequest.getProductId(), priceRequest.getBrandId());
         assertEquals(38.95, response.getFinalPrice());
@@ -76,7 +78,7 @@ public class PricesServiceImplTest {
     public void testFindPriceAt10AMOnDay15ForProduct35455AndBrand1() {
         PriceRequest priceRequest = new PriceRequest("2020-06-15T10:00:00", 35455, 1);
         Prices simulatedPrice = price3;
-        when(pricesRepository.findByStartDateAndProductIdAndBrandId(any(), anyInt(), anyInt()))
+        when(adapter.findByStartDateAndProductIdAndBrandId(any(), anyInt(), anyInt()))
                 .thenReturn(Optional.of(simulatedPrice));
         PriceResponse response = pricesService.consultaDatos(priceRequest.getApplicationDate(), priceRequest.getProductId(), priceRequest.getBrandId());
         assertEquals(30.50, response.getFinalPrice());
@@ -87,7 +89,7 @@ public class PricesServiceImplTest {
     public void testFindPriceAt9PMOnDay16ForProduct35455AndBrand1() {
         PriceRequest priceRequest = new PriceRequest("2020-06-16T21:00:00", 35455, 1);
         Prices simulatedPrice = price4;
-        when(pricesRepository.findByStartDateAndProductIdAndBrandId(any(), anyInt(), anyInt()))
+        when(adapter.findByStartDateAndProductIdAndBrandId(any(), anyInt(), anyInt()))
                 .thenReturn(Optional.of(simulatedPrice));
         PriceResponse response = pricesService.consultaDatos(priceRequest.getApplicationDate(), priceRequest.getProductId(), priceRequest.getBrandId());
         assertEquals(38.95, response.getFinalPrice());

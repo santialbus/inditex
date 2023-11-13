@@ -1,7 +1,7 @@
 package com.inditex.albus.inditex.application.mapper;
 
-import com.inditex.albus.inditex.application.dto.response.PriceResponse;
-import com.inditex.albus.inditex.domain.model.Prices;
+import com.inditex.albus.inditex.domain.dto.response.PriceResponse;
+import com.inditex.albus.inditex.infrastructure.model.Prices;
 
 /**
  * Mapper del price

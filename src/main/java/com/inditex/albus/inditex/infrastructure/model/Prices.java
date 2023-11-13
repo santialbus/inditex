@@ -1,4 +1,4 @@
-package com.inditex.albus.inditex.domain.model;
+package com.inditex.albus.inditex.infrastructure.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

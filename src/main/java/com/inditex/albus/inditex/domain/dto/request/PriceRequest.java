@@ -1,4 +1,4 @@
-package com.inditex.albus.inditex.application.dto.request;
+package com.inditex.albus.inditex.domain.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

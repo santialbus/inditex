@@ -1,14 +1,14 @@
-package com.inditex.albus.inditex.application.service.impl;
+package com.inditex.albus.inditex.application.service;
 
-import com.inditex.albus.inditex.application.dto.request.PriceRequest;
-import com.inditex.albus.inditex.application.dto.response.PriceResponse;
+import com.inditex.albus.inditex.domain.dto.response.PriceResponse;
 import com.inditex.albus.inditex.application.mapper.PriceMapper;
-import com.inditex.albus.inditex.application.service.PricesService;
-import com.inditex.albus.inditex.domain.model.Prices;
+import com.inditex.albus.inditex.application.ports.in.PricesService;
+import com.inditex.albus.inditex.infrastructure.adapter.PricesDataAdapter;
+import com.inditex.albus.inditex.infrastructure.model.Prices;
 import com.inditex.albus.inditex.infrastructure.exceptions.BrandIdNotFoundException;
 import com.inditex.albus.inditex.infrastructure.exceptions.PriceNotFoundException;
 import com.inditex.albus.inditex.infrastructure.exceptions.ProductIdNotFoundException;
-import com.inditex.albus.inditex.infrastructure.repository.PricesRepository;
+import com.inditex.albus.inditex.infrastructure.jpa.PricesRepositoryJpa;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class PricesServiceImpl implements PricesService {
     private static final String ANYADIDO = "Acabas de añadir productos";
 
     @Autowired
-    private PricesRepository repository;
+    private PricesDataAdapter adapter;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PricesServiceImpl.class);
 
@@ -44,14 +44,14 @@ public class PricesServiceImpl implements PricesService {
         LOGGER.info("Consultar datos del Product ID: {}, Brand ID: {}, Application Date: {}", productId, brandId, applicationDate);
 
 
-        Optional<Prices> pricesOptional =repository.findByStartDateAndProductIdAndBrandId(applicationDate, productId,brandId);
+        Optional<Prices> pricesOptional = adapter.findByStartDateAndProductIdAndBrandId(applicationDate, productId,brandId);
 
         return pricesOptional.map(PriceMapper::fromPricesToResponse)
                 .orElseThrow(() -> {
-                    if (!repository.existsByProductId(productId)) {
+                    if (!adapter.existsByProductId(productId)) {
                         LOGGER.error("No se encontró el Product ID: {}", productId);
                         throw new ProductIdNotFoundException("No se encontró ningún precio con el Product ID proporcionado");
-                    } else if (!repository.existsByBrandId(brandId)) {
+                    } else if (!adapter.existsByBrandId(brandId)) {
                         LOGGER.error("No se encontró el Brand ID: {}", brandId);
                         throw new BrandIdNotFoundException("No se encontró ningún precio con el Brand ID proporcionado");
                     } else {
@@ -114,7 +114,7 @@ public class PricesServiceImpl implements PricesService {
         listPrices.add(prices3);
         listPrices.add(prices4);
 
-        repository.saveAll(listPrices);
+        adapter.saveAll(listPrices);
 
         return ANYADIDO;
     }

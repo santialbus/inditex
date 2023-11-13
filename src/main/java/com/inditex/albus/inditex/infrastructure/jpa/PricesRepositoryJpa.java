@@ -1,20 +1,18 @@
-package com.inditex.albus.inditex.infrastructure.repository;
+package com.inditex.albus.inditex.infrastructure.jpa;
 
-import com.inditex.albus.inditex.application.dto.response.PriceResponse;
-import com.inditex.albus.inditex.domain.model.Prices;
+import com.inditex.albus.inditex.application.ports.out.PricesRepository;
+import com.inditex.albus.inditex.infrastructure.model.Prices;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
-import javax.print.attribute.IntegerSyntax;
-import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 /**
  * repositorio del price
  */
-public interface PricesRepository extends JpaRepository<Prices, Long> {
+public interface PricesRepositoryJpa extends JpaRepository<Prices, Long>, PricesRepository {
 
 
     @Query("SELECT p FROM Prices p " +
