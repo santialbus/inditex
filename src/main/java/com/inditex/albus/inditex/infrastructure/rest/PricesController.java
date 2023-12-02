@@ -19,7 +19,7 @@ public class PricesController {
      * @param applicationDate
      * @param productId
      * @param brandId
-     * @return 
+     * @return ResponseEntity<PriceResponse>
      */
     @GetMapping()
     public ResponseEntity<PriceResponse> getPrice(@RequestParam String applicationDate,
