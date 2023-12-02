@@ -24,7 +24,7 @@ import java.util.Optional;
 @Service
 public class PricesServiceImpl implements PricesService {
 
-    private static final String ANYADIDO = "Acabas de añadir productos";
+    private static final String MOCK_PRICES = "Acabas de añadir productos";
 
     @Autowired
     private PricesDataAdapter adapter;
@@ -40,7 +40,7 @@ public class PricesServiceImpl implements PricesService {
      * @return priceResponse
      */
     @Override
-    public PriceResponse consultaDatos(String applicationDate, Integer productId, Integer brandId) {
+    public PriceResponse retrieveData(String applicationDate, Integer productId, Integer brandId) {
         LOGGER.info("Consultar datos del Product ID: {}, Brand ID: {}, Application Date: {}", productId, brandId, applicationDate);
 
 
@@ -66,7 +66,7 @@ public class PricesServiceImpl implements PricesService {
      * @return String
      */
     @Override
-    public String anyadirPrices() {
+    public String addMockPrices() {
         List<Prices> listPrices = new ArrayList<>();
 
         Prices prices1 = new Prices();
@@ -116,6 +116,6 @@ public class PricesServiceImpl implements PricesService {
 
         adapter.saveAll(listPrices);
 
-        return ANYADIDO;
+        return MOCK_PRICES;
     }
 }

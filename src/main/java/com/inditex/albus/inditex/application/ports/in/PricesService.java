@@ -7,8 +7,8 @@ import com.inditex.albus.inditex.domain.dto.response.PriceResponse;
  */
 public interface PricesService {
 
-    PriceResponse consultaDatos(String applicationDate, Integer productId, Integer brandId);
+    PriceResponse retrieveData(String applicationDate, Integer productId, Integer brandId);
 
-    String anyadirPrices();
+    String addMockPrices();
 
 }

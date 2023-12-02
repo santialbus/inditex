@@ -1,4 +1,4 @@
-package com.inditex.albus.inditex.application.rest;
+package com.inditex.albus.inditex.infrastructure.rest;
 
 import com.inditex.albus.inditex.domain.dto.response.PriceResponse;
 import com.inditex.albus.inditex.application.ports.in.PricesService;
@@ -19,21 +19,21 @@ public class PricesController {
      * @param applicationDate
      * @param productId
      * @param brandId
-     * @return
+     * @return 
      */
-    @GetMapping("/consulta")
-    public ResponseEntity<PriceResponse> consultarPrecio(@RequestParam String applicationDate,
+    @GetMapping()
+    public ResponseEntity<PriceResponse> getPrice(@RequestParam String applicationDate,
                                                          @RequestParam Integer productId,
                                                          @RequestParam Integer brandId) {
-        return new ResponseEntity<>(pricesService.consultaDatos(applicationDate, productId, brandId), HttpStatus.OK);
+        return new ResponseEntity<>(pricesService.retrieveData(applicationDate, productId, brandId), HttpStatus.OK);
     }
 
     /**
-     * Anyadir los prices dado que desde el sql creado peta
+     * Añade los precios
      * @return String, HttpStatus
      */
-    @PostMapping("/anyadir")
-    public ResponseEntity<String> anyadirPrices() {
-        return new ResponseEntity<>(pricesService.anyadirPrices(), HttpStatus.OK);
+    @PostMapping()
+    public ResponseEntity<String> addMockPrices() {
+        return new ResponseEntity<>(pricesService.addMockPrices(), HttpStatus.OK);
     }
 }
