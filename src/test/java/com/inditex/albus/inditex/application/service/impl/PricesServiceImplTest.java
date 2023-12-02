@@ -7,6 +7,7 @@ import com.inditex.albus.inditex.infrastructure.adapter.PricesDataAdapter;
 import com.inditex.albus.inditex.infrastructure.model.Prices;
 import com.inditex.albus.inditex.infrastructure.jpa.PricesRepositoryJpa;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -40,6 +41,7 @@ public class PricesServiceImplTest {
     }
 
     @Test
+    @DisplayName("Test 1: petición a las 10:00 del día 14 del producto 35455 para la brand 1 (ZARA)")
     public void test_1() {
         String dateTimeString = "2020-06-14T10:00:00";
         PriceRequest priceRequest = new PriceRequest(dateTimeString, 35455, 1);
@@ -48,22 +50,21 @@ public class PricesServiceImplTest {
                 .thenReturn(Optional.of(simulatedPrice));
         PriceResponse response = pricesService.retrieveData(dateTimeString, priceRequest.getProductId(), priceRequest.getBrandId());
         assertEquals(35.50, response.getFinalPrice());
-        System.out.println("Test 1: petición a las 10:00 del día 14 del producto 35455 para la brand 1 (ZARA)");
     }
 
     @Test
+    @DisplayName("Test 2: petición a las 16:00 del día 14 del producto 35455 para la brand 1 (ZARA)")
     public void test_2() {
         PriceRequest priceRequest = new PriceRequest("2020-06-14T16:00:00", 35455, 1);
         Prices simulatedPrice = price2;
         when(adapter.findByStartDateAndProductIdAndBrandId(any(), anyInt(), anyInt()))
                 .thenReturn(Optional.of(simulatedPrice));
         PriceResponse response = pricesService.retrieveData(priceRequest.getApplicationDate(), priceRequest.getProductId(), priceRequest.getBrandId());
-
         assertEquals(25.45, response.getFinalPrice());
-        System.out.println("Test 2: petición a las 16:00 del día 14 del producto 35455 para la brand 1 (ZARA)");
     }
 
     @Test
+    @DisplayName("Test 3: petición a las 21:00 del día 14 del producto 35455 para la brand 1 (ZARA)")
     public void test_3() {
         PriceRequest priceRequest = new PriceRequest("2020-06-14T21:00:00", 35455, 1);
         Prices simulatedPrice = price4;
@@ -71,10 +72,10 @@ public class PricesServiceImplTest {
                 .thenReturn(Optional.of(simulatedPrice));
         PriceResponse response = pricesService.retrieveData(priceRequest.getApplicationDate(), priceRequest.getProductId(), priceRequest.getBrandId());
         assertEquals(38.95, response.getFinalPrice());
-        System.out.println("Test 3: petición a las 21:00 del día 14 del producto 35455 para la brand 1 (ZARA)");
     }
 
     @Test
+    @DisplayName("Test 4: petición a las 10:00 del día 15 del producto 35455 para la brand 1 (ZARA)")
     public void test_4() {
         PriceRequest priceRequest = new PriceRequest("2020-06-15T10:00:00", 35455, 1);
         Prices simulatedPrice = price3;
@@ -82,10 +83,10 @@ public class PricesServiceImplTest {
                 .thenReturn(Optional.of(simulatedPrice));
         PriceResponse response = pricesService.retrieveData(priceRequest.getApplicationDate(), priceRequest.getProductId(), priceRequest.getBrandId());
         assertEquals(30.50, response.getFinalPrice());
-        System.out.println("Test 4: petición a las 10:00 del día 15 del producto 35455 para la brand 1 (ZARA)");
     }
 
     @Test
+    @DisplayName("Test 5: petición a las 21:00 del día 16 del producto 35455 para la brand 1 (ZARA)")
     public void test_5() {
         PriceRequest priceRequest = new PriceRequest("2020-06-16T21:00:00", 35455, 1);
         Prices simulatedPrice = price4;
@@ -93,7 +94,6 @@ public class PricesServiceImplTest {
                 .thenReturn(Optional.of(simulatedPrice));
         PriceResponse response = pricesService.retrieveData(priceRequest.getApplicationDate(), priceRequest.getProductId(), priceRequest.getBrandId());
         assertEquals(38.95, response.getFinalPrice());
-        System.out.println("Test 5: petición a las 21:00 del día 16 del producto 35455 para la brand 1 (ZARA)");
     }
 
 }

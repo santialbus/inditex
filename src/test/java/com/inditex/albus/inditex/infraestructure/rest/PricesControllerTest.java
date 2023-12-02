@@ -1,5 +1,6 @@
 package com.inditex.albus.inditex.infraestructure.rest;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -16,8 +17,8 @@ public class PricesControllerTest {
     private MockMvc mockMvc;
 
     @Test
+    @DisplayName("Test integración contra el controlador")
     public void testGetPrice() throws Exception {
-        // Puedes ajustar estos valores según tu lógica de negocio
         String requestJson = "{\"productId\": 1, \"brandId\": 1, \"applicationDate\": \"2023-01-01\"}";
 
         mockMvc.perform(MockMvcRequestBuilders.post("/prices")
