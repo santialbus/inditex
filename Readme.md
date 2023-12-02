@@ -46,3 +46,6 @@ Para montar la imagen:
 1- docker build -t inditex_docker .
 2- docker run -p 8080:8080 inditex_docker
 
+SWAGGER:
+
+http://localhost:8080/swagger-ui/index.html
