@@ -39,6 +39,10 @@ El request tiene que ser así:
 "brandId": 1
 }
 
-Los tests son unitarios, al tener que hacer rapido el proyecto de prueba, no pude hacer nada mas.
+DOCKER:
 
-Cualquier cosa me comentais.
+Para montar la imagen:
+
+1- docker build -t inditex_docker .
+2- docker run -p 8080:8080 inditex_docker
+
