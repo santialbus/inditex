@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 /**
  * Objeto entity del price
  */
@@ -15,7 +13,7 @@ import java.util.Date;
 @Table(name="prices")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Prices {
+public class PricesEntity {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)

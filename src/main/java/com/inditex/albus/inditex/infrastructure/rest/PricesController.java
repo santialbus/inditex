@@ -1,6 +1,7 @@
 package com.inditex.albus.inditex.infrastructure.rest;
 
-import com.inditex.albus.inditex.domain.dto.response.PriceResponse;
+import com.inditex.albus.inditex.application.mapper.PriceMapper;
+import com.inditex.albus.inditex.domain.response.PriceResponse;
 import com.inditex.albus.inditex.application.ports.in.PricesService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -43,7 +44,7 @@ public class PricesController {
     public ResponseEntity<PriceResponse> getPrice(@RequestParam String applicationDate,
                                                          @RequestParam Integer productId,
                                                          @RequestParam Integer brandId) {
-        return new ResponseEntity<>(pricesService.retrieveData(applicationDate, productId, brandId), HttpStatus.OK);
+        return new ResponseEntity<>(PriceMapper.fromPricesToResponse(pricesService.retrieveData(applicationDate, productId, brandId)), HttpStatus.OK);
     }
 
     /**

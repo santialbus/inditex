@@ -1,14 +1,13 @@
 package com.inditex.albus.inditex.application.service;
 
-import com.inditex.albus.inditex.domain.dto.response.PriceResponse;
+import com.inditex.albus.inditex.domain.Prices;
 import com.inditex.albus.inditex.application.mapper.PriceMapper;
 import com.inditex.albus.inditex.application.ports.in.PricesService;
 import com.inditex.albus.inditex.infrastructure.adapter.PricesDataAdapter;
-import com.inditex.albus.inditex.infrastructure.model.Prices;
+import com.inditex.albus.inditex.infrastructure.model.PricesEntity;
 import com.inditex.albus.inditex.infrastructure.exceptions.BrandIdNotFoundException;
 import com.inditex.albus.inditex.infrastructure.exceptions.PriceNotFoundException;
 import com.inditex.albus.inditex.infrastructure.exceptions.ProductIdNotFoundException;
-import com.inditex.albus.inditex.infrastructure.jpa.PricesRepositoryJpa;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,13 +39,13 @@ public class PricesServiceImpl implements PricesService {
      * @return priceResponse
      */
     @Override
-    public PriceResponse retrieveData(String applicationDate, Integer productId, Integer brandId) {
+    public Prices retrieveData(String applicationDate, Integer productId, Integer brandId) {
         LOGGER.info("Consultar datos del Product ID: {}, Brand ID: {}, Application Date: {}", productId, brandId, applicationDate);
 
 
-        Optional<Prices> pricesOptional = adapter.findByStartDateAndProductIdAndBrandId(applicationDate, productId,brandId);
+        Optional<PricesEntity> pricesOptional = adapter.findByStartDateAndProductIdAndBrandId(applicationDate, productId,brandId);
 
-        return pricesOptional.map(PriceMapper::fromPricesToResponse)
+        return pricesOptional.map(PriceMapper::fromPricesEntityToPrices)
                 .orElseThrow(() -> {
                     if (!adapter.existsByProductId(productId)) {
                         LOGGER.error("No se encontró el Product ID: {}", productId);
@@ -67,9 +66,9 @@ public class PricesServiceImpl implements PricesService {
      */
     @Override
     public String addMockPrices() {
-        List<Prices> listPrices = new ArrayList<>();
+        List<PricesEntity> listPrices = new ArrayList<>();
 
-        Prices prices1 = new Prices();
+        PricesEntity prices1 = new PricesEntity();
         prices1.setBrandId(1);
         prices1.setStartDate("2020-06-14 00:00:00");
         prices1.setEndDate("2020-12-31 23:59:59");
@@ -79,7 +78,7 @@ public class PricesServiceImpl implements PricesService {
         prices1.setPrice(35.50);
         prices1.setCurr("EUR");
 
-        Prices prices2 = new Prices();
+        PricesEntity prices2 = new PricesEntity();
         prices2.setBrandId(1);
         prices2.setStartDate("2020-06-14 15:00:00");
         prices2.setEndDate("2020-06-14 18:30:00");
@@ -89,7 +88,7 @@ public class PricesServiceImpl implements PricesService {
         prices2.setPrice(25.45);
         prices2.setCurr("EUR");
 
-        Prices prices3 = new Prices();
+        PricesEntity prices3 = new PricesEntity();
         prices3.setBrandId(1);
         prices3.setStartDate("2020-06-15 00:00:00");
         prices3.setEndDate("2020-06-15 11:00:00");
@@ -99,7 +98,7 @@ public class PricesServiceImpl implements PricesService {
         prices3.setPrice(30.50);
         prices3.setCurr("EUR");
 
-        Prices prices4 = new Prices();
+        PricesEntity prices4 = new PricesEntity();
         prices4.setBrandId(1);
         prices4.setStartDate("2020-06-15 16:00:00");
         prices4.setEndDate("2020-12-31 23:59:59");

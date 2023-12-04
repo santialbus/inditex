@@ -1,7 +1,8 @@
 package com.inditex.albus.inditex.application.mapper;
 
-import com.inditex.albus.inditex.domain.dto.response.PriceResponse;
-import com.inditex.albus.inditex.infrastructure.model.Prices;
+import com.inditex.albus.inditex.domain.Prices;
+import com.inditex.albus.inditex.domain.response.PriceResponse;
+import com.inditex.albus.inditex.infrastructure.model.PricesEntity;
 
 /**
  * Mapper del price
@@ -22,6 +23,25 @@ public class PriceMapper {
         priceResponse.setEndDate(prices.getEndDate());
         priceResponse.setFinalPrice(prices.getPrice());
         return priceResponse;
+    }
+
+    /**
+     * Pasar de price entity a price domain
+     * @param pricesEntity
+     * @return price
+     */
+    public static Prices fromPricesEntityToPrices(PricesEntity pricesEntity) {
+        Prices prices = new Prices();
+        prices.setBrandId(pricesEntity.getBrandId());
+        prices.setPriceList(pricesEntity.getPriceList());
+        prices.setPrice(pricesEntity.getPrice());
+        prices.setId(pricesEntity.getId());
+        prices.setCurr(pricesEntity.getCurr());
+        prices.setStartDate(pricesEntity.getStartDate());
+        prices.setEndDate(pricesEntity.getEndDate());
+        prices.setPriority(pricesEntity.getPriority());
+        prices.setProductId(pricesEntity.getProductId());
+        return prices;
     }
 
 }

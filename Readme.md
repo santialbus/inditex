@@ -12,7 +12,7 @@ La carga de los datos no se esta realizando por errores en el IDE y demás, por 
 
 POST:
 
-http://localhost:8080/prices
+http://localhost:8080/pricesEntity
 
 Una vez esto ya se podrá "jugar" con la bbdd.
 
@@ -21,7 +21,7 @@ http://localhost:8080/pricesapplicationDate=2020-06-14 00:00:00&productId=35455&
 
 Curl de ejemplo:
 
-curl --location --request GET 'http://localhost:8080/prices?applicationDate=2020-06-14%2000%3A00%3A00&productId=35455&brandId=1' \
+curl --location --request GET 'http://localhost:8080/pricesEntity?applicationDate=2020-06-14%2000%3A00%3A00&productId=35455&brandId=1' \
 --header 'Content-Type: application/json' \
 --data '{
 "applicationDate": "2020-06-14 00:00:00",

@@ -1,8 +1,7 @@
 package com.inditex.albus.inditex.application.ports.out;
 
-import com.inditex.albus.inditex.infrastructure.model.Prices;
+import com.inditex.albus.inditex.infrastructure.model.PricesEntity;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -11,9 +10,9 @@ import java.util.Optional;
  */
 public interface PricesRepository {
 
-    Optional<Prices> findByStartDateAndProductIdAndBrandId(String applicationDate,
-                                                           Integer productId,
-                                                           Integer brandId);
+    Optional<PricesEntity> findByStartDateAndProductIdAndBrandId(String applicationDate,
+                                                                 Integer productId,
+                                                                 Integer brandId);
     Boolean existsByProductId(Integer productId);
 
     Boolean existsByBrandId(Integer brandId);

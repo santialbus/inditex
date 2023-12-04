@@ -1,4 +1,4 @@
-package com.inditex.albus.inditex.domain.dto.response;
+package com.inditex.albus.inditex.domain.response;
 
 import lombok.Data;
 

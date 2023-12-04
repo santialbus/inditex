@@ -2,7 +2,7 @@ package com.inditex.albus.inditex.infrastructure.adapter;
 
 import com.inditex.albus.inditex.application.ports.out.PricesRepository;
 import com.inditex.albus.inditex.infrastructure.jpa.PricesRepositoryJpa;
-import com.inditex.albus.inditex.infrastructure.model.Prices;
+import com.inditex.albus.inditex.infrastructure.model.PricesEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +17,7 @@ public class PricesDataAdapter implements PricesRepository {
 
 
     @Override
-    public Optional<Prices> findByStartDateAndProductIdAndBrandId(String applicationDate, Integer productId, Integer brandId) {
+    public Optional<PricesEntity> findByStartDateAndProductIdAndBrandId(String applicationDate, Integer productId, Integer brandId) {
         return pricesRepositoryJpaSpringData.findByStartDateAndProductIdAndBrandId(applicationDate, productId, brandId);
     }
 
@@ -31,7 +31,7 @@ public class PricesDataAdapter implements PricesRepository {
         return pricesRepositoryJpaSpringData.existsByBrandId(brandId);
     }
 
-    public void saveAll(List<Prices> prices) {
+    public void saveAll(List<PricesEntity> prices) {
         pricesRepositoryJpaSpringData.saveAll(prices);
     }
 }
